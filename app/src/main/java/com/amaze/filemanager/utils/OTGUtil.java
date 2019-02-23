@@ -3,7 +3,6 @@ package com.amaze.filemanager.utils;
 import android.content.Context;
 import android.hardware.usb.UsbConstants;
 import android.hardware.usb.UsbDevice;
-import android.hardware.usb.UsbInterface;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.Build;

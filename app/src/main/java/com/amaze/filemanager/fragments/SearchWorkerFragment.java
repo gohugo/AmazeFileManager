@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.amaze.filemanager.filesystem.HybridFileParcelable;
 import com.amaze.filemanager.asynchronous.asynctasks.SearchAsyncTask;
+import com.amaze.filemanager.filesystem.HybridFileParcelable;
 import com.amaze.filemanager.utils.OpenMode;
 
 /**

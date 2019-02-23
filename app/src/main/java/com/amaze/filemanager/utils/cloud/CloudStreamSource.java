@@ -1,6 +1,5 @@
 package com.amaze.filemanager.utils.cloud;
 
-import com.amaze.filemanager.utils.SmbStreamer.StreamSource;
 import com.amaze.filemanager.utils.streams.RandomAccessStream;
 
 import java.io.IOException;

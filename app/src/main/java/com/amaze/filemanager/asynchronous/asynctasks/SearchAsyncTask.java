@@ -7,7 +7,6 @@ import android.util.Log;
 import com.amaze.filemanager.filesystem.HybridFile;
 import com.amaze.filemanager.filesystem.HybridFileParcelable;
 import com.amaze.filemanager.fragments.SearchWorkerFragment;
-import com.amaze.filemanager.utils.OnFileFound;
 import com.amaze.filemanager.utils.OpenMode;
 
 import java.lang.ref.WeakReference;

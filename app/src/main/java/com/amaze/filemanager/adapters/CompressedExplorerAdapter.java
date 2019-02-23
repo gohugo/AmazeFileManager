@@ -27,11 +27,11 @@ import com.amaze.filemanager.filesystem.compressed.CompressedHelper;
 import com.amaze.filemanager.filesystem.compressed.showcontents.Decompressor;
 import com.amaze.filemanager.fragments.CompressedExplorerFragment;
 import com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants;
+import com.amaze.filemanager.ui.colors.ColorUtils;
 import com.amaze.filemanager.ui.views.CircleGradientDrawable;
 import com.amaze.filemanager.utils.AnimUtils;
 import com.amaze.filemanager.utils.OpenMode;
 import com.amaze.filemanager.utils.Utils;
-import com.amaze.filemanager.ui.colors.ColorUtils;
 import com.amaze.filemanager.utils.provider.UtilitiesProvider;
 import com.amaze.filemanager.utils.theme.AppTheme;
 

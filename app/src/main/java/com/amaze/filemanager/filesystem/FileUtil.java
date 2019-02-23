@@ -72,8 +72,6 @@ import java.util.regex.Pattern;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
-import static android.os.Build.VERSION.SDK_INT;
-
 /**
  * Utility class for helping parsing file systems.
  */

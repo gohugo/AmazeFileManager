@@ -24,22 +24,21 @@ package com.amaze.filemanager.utils.files;
 
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.support.v4.provider.DocumentFile;
 import android.util.Log;
 
 import com.amaze.filemanager.R;
-import com.amaze.filemanager.filesystem.HybridFileParcelable;
 import com.amaze.filemanager.filesystem.FileUtil;
-import com.amaze.filemanager.filesystem.MediaStoreHack;
-import com.amaze.filemanager.utils.ProgressHandler;
-import com.amaze.filemanager.utils.application.AppConfig;
 import com.amaze.filemanager.filesystem.HybridFile;
+import com.amaze.filemanager.filesystem.HybridFileParcelable;
+import com.amaze.filemanager.filesystem.MediaStoreHack;
 import com.amaze.filemanager.utils.DataUtils;
 import com.amaze.filemanager.utils.OTGUtil;
 import com.amaze.filemanager.utils.OpenMode;
+import com.amaze.filemanager.utils.ProgressHandler;
 import com.amaze.filemanager.utils.ServiceWatcherUtil;
+import com.amaze.filemanager.utils.application.AppConfig;
 import com.amaze.filemanager.utils.cloud.CloudUtil;
 import com.cloudrail.si.interfaces.CloudStorage;
 

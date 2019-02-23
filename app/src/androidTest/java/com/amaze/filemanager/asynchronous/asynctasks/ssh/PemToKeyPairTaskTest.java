@@ -12,7 +12,6 @@ import java.lang.reflect.Field;
 import java.util.concurrent.CountDownLatch;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 @RunWith(AndroidJUnit4.class)
 public class PemToKeyPairTaskTest {

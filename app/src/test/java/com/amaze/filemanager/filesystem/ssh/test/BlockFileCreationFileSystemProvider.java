@@ -1,6 +1,5 @@
 package com.amaze.filemanager.filesystem.ssh.test;
 
-import org.apache.sshd.common.file.root.RootedFileSystem;
 import org.apache.sshd.common.file.root.RootedFileSystemProvider;
 
 import java.io.IOException;

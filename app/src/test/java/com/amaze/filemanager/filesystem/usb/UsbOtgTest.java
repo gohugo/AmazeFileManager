@@ -18,10 +18,7 @@ import java.util.ArrayList;
 
 import static android.os.Build.VERSION_CODES.KITKAT;
 import static com.amaze.filemanager.filesystem.usb.ReflectionHelpers.addUsbOtgDevice;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import static org.robolectric.Shadows.shadowOf;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class, shadows = {ShadowMultiDex.class})

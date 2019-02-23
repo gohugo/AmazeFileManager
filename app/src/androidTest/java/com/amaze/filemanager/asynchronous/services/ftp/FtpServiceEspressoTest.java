@@ -38,7 +38,10 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.security.SecureRandom;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class FtpServiceEspressoTest {

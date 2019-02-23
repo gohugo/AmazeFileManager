@@ -14,8 +14,6 @@ import com.amaze.filemanager.R;
 import com.amaze.filemanager.ui.views.CheckableCircleView;
 import com.amaze.filemanager.utils.Utils;
 
-import java.util.List;
-
 public class ColorAdapter extends ArrayAdapter<Integer> implements AdapterView.OnItemClickListener {
 
     private LayoutInflater inflater;

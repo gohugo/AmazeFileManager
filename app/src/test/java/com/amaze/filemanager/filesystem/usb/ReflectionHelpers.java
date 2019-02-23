@@ -12,7 +12,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 
-import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowEnvironment;
 import org.robolectric.shadows.ShadowUsbManager;
 
@@ -23,7 +22,6 @@ import java.lang.reflect.Method;
 
 import static android.content.Context.USB_SERVICE;
 import static android.hardware.usb.UsbConstants.USB_CLASS_MASS_STORAGE;
-import static android.os.Build.VERSION_CODES.KITKAT;
 import static org.robolectric.Shadows.shadowOf;
 
 class ReflectionHelpers {

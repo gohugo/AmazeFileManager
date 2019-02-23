@@ -3,9 +3,10 @@ package com.amaze.filemanager.utils.theme;
 import com.afollestad.materialdialogs.Theme;
 
 import org.junit.Test;
+
 import java.util.Calendar;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by yuhalyn on 2018-04-02.

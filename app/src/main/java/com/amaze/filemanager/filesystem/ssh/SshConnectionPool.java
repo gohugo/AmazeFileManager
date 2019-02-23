@@ -21,16 +21,15 @@
 
 package com.amaze.filemanager.filesystem.ssh;
 
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.amaze.filemanager.activities.MainActivity;
-import com.amaze.filemanager.database.UtilsHandler;
 import com.amaze.filemanager.asynchronous.asynctasks.AsyncTaskResult;
 import com.amaze.filemanager.asynchronous.asynctasks.ssh.PemToKeyPairTask;
 import com.amaze.filemanager.asynchronous.asynctasks.ssh.SshAuthenticationTask;
+import com.amaze.filemanager.database.UtilsHandler;
 import com.amaze.filemanager.utils.application.AppConfig;
 
 import net.schmizz.sshj.SSHClient;

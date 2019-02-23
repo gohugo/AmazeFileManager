@@ -3,7 +3,6 @@ package com.amaze.filemanager.asynchronous.asynctasks;
 import android.content.ContentResolver;
 import android.os.AsyncTask;
 
-import com.amaze.filemanager.activities.superclasses.ThemedActivity;
 import com.amaze.filemanager.exceptions.ShellNotRunningException;
 import com.amaze.filemanager.exceptions.StreamNotFoundException;
 import com.amaze.filemanager.filesystem.EditableFileAbstraction;

@@ -16,7 +16,7 @@ import org.junit.runner.RunWith;
 import java.io.File;
 import java.util.concurrent.CountDownLatch;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 
 @SmallTest
 @RunWith(AndroidJUnit4.class)

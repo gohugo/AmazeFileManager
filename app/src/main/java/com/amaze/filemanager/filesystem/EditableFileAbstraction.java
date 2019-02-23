@@ -7,8 +7,6 @@ import android.provider.OpenableColumns;
 
 import com.amaze.filemanager.utils.Utils;
 
-import java.io.FileNotFoundException;
-
 /**
  * This is a special representation of a file that is to be used so that uris can be loaded as
  * editable files.

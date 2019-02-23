@@ -22,7 +22,6 @@
 package com.amaze.filemanager.utils;
 
 import android.support.annotation.Nullable;
-
 import android.view.MenuItem;
 
 import com.amaze.filemanager.ui.views.drawer.MenuMetadata;

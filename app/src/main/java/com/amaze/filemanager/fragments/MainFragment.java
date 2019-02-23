@@ -119,9 +119,13 @@ import java.util.List;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
-import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.*;
+import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.PREFERENCE_DIRECTORY_SORT_MODE;
+import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.PREFERENCE_GRID_COLUMNS;
 import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.PREFERENCE_SHOW_DIVIDERS;
 import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.PREFERENCE_SHOW_GOBACK_BUTTON;
+import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.PREFERENCE_SHOW_HIDDENFILES;
+import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.PREFERENCE_SHOW_THUMB;
+import static com.amaze.filemanager.fragments.preference_fragments.PreferencesConstants.PREFERENCE_TEXTEDITOR_NEWSTACK;
 
 public class MainFragment extends android.support.v4.app.Fragment implements BottomBarButtonPath {
 
