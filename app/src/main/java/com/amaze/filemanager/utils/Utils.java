@@ -193,10 +193,6 @@ public class Utils {
         }
     }
 
-    public  boolean isDeviceInLandScape(Activity activity){
-        return activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-    }
-
     /**
      * Sanitizes input from external application to avoid any attempt of command injection
      */
@@ -221,51 +217,6 @@ public class Utils {
                 replaceAll(INPUT_INTENT_BLACKLIST_COLON, "");
     }
 
-    /**
-     * Returns uri associated to specific basefile
-     */
-    public Uri getUriForBaseFile(Context context, HybridFileParcelable baseFile) {
-        switch (baseFile.getMode()) {
-            case FILE:
-            case ROOT:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-
-                    return GenericFileProvider.getUriForFile(context, GenericFileProvider.PROVIDER_NAME,
-                            new File(baseFile.getPath()));
-                } else {
-                    return Uri.fromFile(new File(baseFile.getPath()));
-                }
-            case OTG:
-                return OTGUtil.getDocumentFile(baseFile.getPath(), context, true).getUri();
-            case SMB:
-            case DROPBOX:
-            case GDRIVE:
-            case ONEDRIVE:
-            case BOX:
-                Toast.makeText(context, context.getString(R.string.smb_launch_error),
-                        Toast.LENGTH_LONG).show();
-                return null;
-            default:
-                return null;
-        }
-    }
-
-    /**
-     * Gets position of nth to last char in String.
-     * nthToLastCharIndex(1, "a.tar.gz") = 1
-     * nthToLastCharIndex(0, "a.tar.gz") = 5
-     */
-    public int nthToLastCharIndex(int elementNumber, String str, char element) {
-        if(elementNumber <= 0) throw new IllegalArgumentException();
-
-        int occurencies = 0;
-        for (int i = str.length()-1; i >= 0; i--) {
-            if(str.charAt(i) == element && ++occurencies == elementNumber) {
-                return i;
-            }
-        }
-        return -1;
-    }
 
     /**
      * Formats input to plain mm:ss format

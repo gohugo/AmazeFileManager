@@ -95,6 +95,7 @@ import com.amaze.filemanager.ui.views.RoundedImageView;
 import com.amaze.filemanager.ui.views.WarnableTextInputValidator;
 import com.amaze.filemanager.utils.BottomBarButtonPath;
 import com.amaze.filemanager.utils.DataUtils;
+import com.amaze.filemanager.utils.GenericFileProvider;
 import com.amaze.filemanager.utils.MainActivityHelper;
 import com.amaze.filemanager.utils.OTGUtil;
 import com.amaze.filemanager.utils.OpenMode;
@@ -624,7 +625,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Bot
 
                         for (LayoutElementParcelable element : checkedItems) {
                             HybridFileParcelable baseFile = element.generateBaseFile();
-                            Uri resultUri = Utils.getInstance().getUriForBaseFile(getActivity(), baseFile);
+                            Uri resultUri = getUriForBaseFile(getActivity(), baseFile);
 
                             if (resultUri != null) {
                                 resulturis.add(resultUri);
@@ -983,7 +984,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Bot
 
             Intent intentresult = new Intent();
 
-            Uri resultUri = Utils.getInstance().getUriForBaseFile(getActivity(), baseFile);
+            Uri resultUri = getUriForBaseFile(getActivity(), baseFile);
             intentresult.setAction(Intent.ACTION_SEND);
             intentresult.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
@@ -1683,6 +1684,35 @@ public class MainFragment extends android.support.v4.app.Fragment implements Bot
                 }
             }
         }.start();
+    }
+
+    /**
+     * Returns uri associated to specific basefile
+     */
+    private Uri getUriForBaseFile(Context context, HybridFileParcelable baseFile) {
+        switch (baseFile.getMode()) {
+            case FILE:
+            case ROOT:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                    return GenericFileProvider.getUriForFile(context, GenericFileProvider.PROVIDER_NAME,
+                            new File(baseFile.getPath()));
+                } else {
+                    return Uri.fromFile(new File(baseFile.getPath()));
+                }
+            case OTG:
+                return OTGUtil.getDocumentFile(baseFile.getPath(), context, true).getUri();
+            case SMB:
+            case DROPBOX:
+            case GDRIVE:
+            case ONEDRIVE:
+            case BOX:
+                Toast.makeText(context, context.getString(R.string.smb_launch_error),
+                        Toast.LENGTH_LONG).show();
+                return null;
+            default:
+                return null;
+        }
     }
 
     @Override
