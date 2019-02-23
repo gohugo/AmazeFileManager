@@ -18,10 +18,15 @@ import com.amaze.filemanager.ui.dialogs.ColorPickerDialog;
 import com.amaze.filemanager.ui.dialogs.GeneralDialogCreation;
 import com.amaze.filemanager.utils.theme.AppTheme;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by arpitkh996 on 03-03-2016.
  */
 public class ThemedActivity extends PreferenceActivity {
+
+    private HashMap<String, HashMap<AppTheme, Integer>> themes;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,187 +37,158 @@ public class ThemedActivity extends PreferenceActivity {
         if (colorPickerPref == ColorPickerDialog.RANDOM_INDEX) {
             getColorPreference().saveColorPreferences(getPrefs(), ColorPreferenceHelper.randomize(this));
         }
+        SetThemeMap();
 
         setTheme();
     }
+
 
     public UserColorPreferences getCurrentColorPreference() {
         return getColorPreference().getCurrentUserColorPreferences(this, getPrefs());
     }
 
-    public @ColorInt int getAccent() {
+    public @ColorInt
+    int getAccent() {
         return getColorPreference().getCurrentUserColorPreferences(this, getPrefs()).accent;
     }
+    private void SetThemeMap() {
 
-    void setTheme() {
+        themes = new HashMap<>();
+
+        HashMap<AppTheme, Integer> red = new HashMap<>();
+        HashMap<AppTheme, Integer> pink = new HashMap<>();
+        HashMap<AppTheme, Integer> purple = new HashMap<>();
+        HashMap<AppTheme, Integer> deep_purple = new HashMap<>();
+        HashMap<AppTheme, Integer> indigo = new HashMap<>();
+        HashMap<AppTheme, Integer> blue = new HashMap<>();
+        HashMap<AppTheme, Integer> light_blue = new HashMap<>();
+        HashMap<AppTheme, Integer> cyan = new HashMap<>();
+        HashMap<AppTheme, Integer> teal = new HashMap<>();
+        HashMap<AppTheme, Integer> green = new HashMap<>();
+        HashMap<AppTheme, Integer> light_green = new HashMap<>();
+        HashMap<AppTheme, Integer> amber = new HashMap<>();
+        HashMap<AppTheme, Integer> orange = new HashMap<>();
+        HashMap<AppTheme, Integer> deep_orange = new HashMap<>();
+        HashMap<AppTheme, Integer> brown = new HashMap<>();
+        HashMap<AppTheme, Integer> black = new HashMap<>();
+        HashMap<AppTheme, Integer> blue_grey = new HashMap<>();
+        HashMap<AppTheme, Integer> super_su = new HashMap<>();
+
+
+        red.put(AppTheme.LIGHT, R.style.pref_accent_light_red);
+        red.put(AppTheme.BLACK, R.style.pref_accent_black_red);
+        red.put(AppTheme.DARK, R.style.pref_accent_dark_red);
+
+        pink.put(AppTheme.LIGHT, R.style.pref_accent_light_pink);
+        pink.put(AppTheme.BLACK, R.style.pref_accent_black_pink);
+        pink.put(AppTheme.DARK, R.style.pref_accent_dark_pink);
+
+        purple.put(AppTheme.LIGHT, R.style.pref_accent_light_purple);
+        purple.put(AppTheme.BLACK, R.style.pref_accent_black_purple);
+        purple.put(AppTheme.DARK, R.style.pref_accent_dark_purple);
+
+        deep_purple.put(AppTheme.LIGHT, R.style.pref_accent_light_deep_purple);
+        deep_purple.put(AppTheme.BLACK, R.style.pref_accent_black_deep_purple);
+        deep_purple.put(AppTheme.DARK, R.style.pref_accent_dark_deep_purple);
+
+        indigo.put(AppTheme.LIGHT, R.style.pref_accent_light_indigo);
+        indigo.put(AppTheme.BLACK, R.style.pref_accent_black_indigo);
+        indigo.put(AppTheme.DARK, R.style.pref_accent_dark_indigo);
+
+        blue.put(AppTheme.LIGHT, R.style.pref_accent_light_blue);
+        blue.put(AppTheme.BLACK, R.style.pref_accent_black_blue);
+        blue.put(AppTheme.DARK, R.style.pref_accent_dark_blue);
+
+        light_blue.put(AppTheme.LIGHT, R.style.pref_accent_light_light_blue);
+        light_blue.put(AppTheme.BLACK, R.style.pref_accent_black_light_blue);
+        light_blue.put(AppTheme.DARK, R.style.pref_accent_dark_light_blue);
+
+
+        cyan.put(AppTheme.LIGHT, R.style.pref_accent_light_cyan);
+        cyan.put(AppTheme.BLACK, R.style.pref_accent_black_cyan);
+        cyan.put(AppTheme.DARK, R.style.pref_accent_dark_cyan);
+
+
+        teal.put(AppTheme.LIGHT, R.style.pref_accent_light_teal);
+        teal.put(AppTheme.BLACK, R.style.pref_accent_black_teal);
+        teal.put(AppTheme.DARK, R.style.pref_accent_dark_teal);
+
+
+        green.put(AppTheme.LIGHT, R.style.pref_accent_light_green);
+        green.put(AppTheme.BLACK, R.style.pref_accent_black_green);
+        green.put(AppTheme.DARK, R.style.pref_accent_dark_green);
+
+
+        light_green.put(AppTheme.LIGHT, R.style.pref_accent_light_light_green);
+        light_green.put(AppTheme.BLACK, R.style.pref_accent_black_light_green);
+        light_green.put(AppTheme.DARK, R.style.pref_accent_dark_light_green);
+
+
+        amber.put(AppTheme.LIGHT, R.style.pref_accent_light_amber);
+        amber.put(AppTheme.BLACK, R.style.pref_accent_black_amber);
+        amber.put(AppTheme.DARK, R.style.pref_accent_dark_amber);
+
+
+        orange.put(AppTheme.LIGHT, R.style.pref_accent_light_orange);
+        orange.put(AppTheme.BLACK, R.style.pref_accent_black_orange);
+        orange.put(AppTheme.DARK, R.style.pref_accent_dark_orange);
+
+
+        deep_orange.put(AppTheme.LIGHT, R.style.pref_accent_light_deep_orange);
+        deep_orange.put(AppTheme.BLACK, R.style.pref_accent_black_deep_orange);
+        deep_orange.put(AppTheme.DARK, R.style.pref_accent_dark_deep_orange);
+
+
+        brown.put(AppTheme.LIGHT, R.style.pref_accent_light_brown);
+        brown.put(AppTheme.BLACK, R.style.pref_accent_black_brown);
+        brown.put(AppTheme.DARK, R.style.pref_accent_dark_brown);
+
+
+        black.put(AppTheme.LIGHT, R.style.pref_accent_light_black);
+        black.put(AppTheme.BLACK, R.style.pref_accent_black_black);
+        black.put(AppTheme.DARK, R.style.pref_accent_dark_black);
+
+
+        blue_grey.put(AppTheme.LIGHT, R.style.pref_accent_light_blue_grey);
+        blue_grey.put(AppTheme.BLACK, R.style.pref_accent_black_blue_grey);
+        blue_grey.put(AppTheme.DARK, R.style.pref_accent_dark_blue_grey);
+
+
+        super_su.put(AppTheme.LIGHT, R.style.pref_accent_light_super_su);
+        super_su.put(AppTheme.BLACK, R.style.pref_accent_black_super_su);
+        super_su.put(AppTheme.DARK, R.style.pref_accent_dark_super_su);
+
+
+        themes.put("#F44336", red);
+        themes.put("#E91E63", pink);
+        themes.put("#9C27B0", purple);
+        themes.put("#673AB7", deep_purple);
+        themes.put("#3F51B5", indigo);
+        themes.put("#2196F3", blue);
+        themes.put("#03A9F4", light_blue);
+        themes.put("#00BCD4", cyan);
+        themes.put("#009688", teal);
+        themes.put("#4CAF50", green);
+        themes.put("#8BC34A", light_green);
+        themes.put("#FFC107", amber);
+        themes.put("#FF9800", orange);
+        themes.put("#FF5722", deep_orange);
+        themes.put("#795548", brown);
+        themes.put("#212121", black);
+        themes.put("#607D8B", blue_grey);
+        themes.put("#004D40", super_su);
+
+    }
+
+
+
+    private void setTheme() {
         AppTheme theme = getAppTheme().getSimpleTheme();
         if (Build.VERSION.SDK_INT >= 21) {
 
             String stringRepresentation = String.format("#%06X", (0xFFFFFF & getAccent()));
+            setTheme(themes.get(stringRepresentation).get(theme));
 
-            switch (stringRepresentation.toUpperCase()) {
-                case "#F44336":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_red);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_red);
-                    else
-                        setTheme(R.style.pref_accent_dark_red);
-                    break;
-
-                case "#E91E63":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_pink);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_pink);
-                    else
-                        setTheme(R.style.pref_accent_dark_pink);
-                    break;
-
-                case "#9C27B0":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_purple);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_purple);
-                    else
-                        setTheme(R.style.pref_accent_dark_purple);
-                    break;
-
-                case "#673AB7":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_deep_purple);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_deep_purple);
-                    else
-                        setTheme(R.style.pref_accent_dark_deep_purple);
-                    break;
-
-                case "#3F51B5":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_indigo);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_indigo);
-                    else
-                        setTheme(R.style.pref_accent_dark_indigo);
-                    break;
-
-                case "#2196F3":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_blue);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_blue);
-                    else
-                        setTheme(R.style.pref_accent_dark_blue);
-                    break;
-
-                case "#03A9F4":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_light_blue);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_light_blue);
-                    else
-                        setTheme(R.style.pref_accent_dark_light_blue);
-                    break;
-
-                case "#00BCD4":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_cyan);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_cyan);
-                    else
-                        setTheme(R.style.pref_accent_dark_cyan);
-                    break;
-
-                case "#009688":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_teal);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_teal);
-                    else
-                        setTheme(R.style.pref_accent_dark_teal);
-                    break;
-
-                case "#4CAF50":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_green);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_green);
-                    else
-                        setTheme(R.style.pref_accent_dark_green);
-                    break;
-
-                case "#8BC34A":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_light_green);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_light_green);
-                    else
-                        setTheme(R.style.pref_accent_dark_light_green);
-                    break;
-
-                case "#FFC107":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_amber);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_amber);
-                    else
-                        setTheme(R.style.pref_accent_dark_amber);
-                    break;
-
-                case "#FF9800":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_orange);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_orange);
-                    else
-                        setTheme(R.style.pref_accent_dark_orange);
-                    break;
-
-                case "#FF5722":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_deep_orange);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_deep_orange);
-                    else
-                        setTheme(R.style.pref_accent_dark_deep_orange);
-                    break;
-
-                case "#795548":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_brown);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_brown);
-                    else
-                        setTheme(R.style.pref_accent_dark_brown);
-                    break;
-
-                case "#212121":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_black);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_black);
-                    else
-                        setTheme(R.style.pref_accent_dark_black);
-                    break;
-
-                case "#607D8B":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_blue_grey);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_blue_grey);
-                    else
-                        setTheme(R.style.pref_accent_dark_blue_grey);
-                    break;
-
-                case "#004D40":
-                    if (theme.equals(AppTheme.LIGHT))
-                        setTheme(R.style.pref_accent_light_super_su);
-                    else if (theme.equals(AppTheme.BLACK))
-                        setTheme(R.style.pref_accent_black_super_su);
-                    else
-                        setTheme(R.style.pref_accent_dark_super_su);
-                    break;
-            }
         } else {
             if (theme.equals(AppTheme.LIGHT)) {
                 setTheme(R.style.appCompatLight);
