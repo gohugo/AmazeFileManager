@@ -3,6 +3,7 @@ package com.amaze.filemanager.utils.SmbStreamer;
 /**
  * Created by Arpit on 06-07-2015.
  */
+
 import android.webkit.MimeTypeMap;
 
 import com.amaze.filemanager.utils.streams.RandomAccessStream;
@@ -10,7 +11,6 @@ import com.amaze.filemanager.utils.streams.RandomAccessStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
 public class StreamSource extends RandomAccessStream {

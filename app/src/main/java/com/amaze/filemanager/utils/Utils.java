@@ -28,7 +28,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
-
 import android.os.Build;
 import android.support.annotation.ColorRes;
 import android.support.v4.content.ContextCompat;
@@ -36,8 +35,10 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.CheckBox;
+
 import com.amaze.filemanager.R;
 import com.amaze.filemanager.activities.MainActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.concurrent.TimeUnit;
 

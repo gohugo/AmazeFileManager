@@ -12,7 +12,6 @@ import java.net.URL;
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
-import jcifs.smb.SmbFileInputStream;
 
 @Implements(SmbFile.class)
 public class ShadowSmbFile {

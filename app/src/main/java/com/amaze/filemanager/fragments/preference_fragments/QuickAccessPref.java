@@ -8,7 +8,6 @@ import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 
 import com.amaze.filemanager.R;
-import com.amaze.filemanager.activities.PreferencesActivity;
 import com.amaze.filemanager.utils.TinyDB;
 
 import java.util.Collections;

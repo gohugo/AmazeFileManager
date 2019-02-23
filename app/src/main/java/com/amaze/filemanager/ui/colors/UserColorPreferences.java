@@ -4,8 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.ColorInt;
 
-import com.amaze.filemanager.R;
-
 public final class UserColorPreferences implements Parcelable {
 
     public final @ColorInt int primaryFirstTab, primarySecondTab, accent, iconSkin;

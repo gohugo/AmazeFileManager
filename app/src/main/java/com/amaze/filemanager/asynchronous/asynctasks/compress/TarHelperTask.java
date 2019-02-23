@@ -22,19 +22,15 @@
 
 package com.amaze.filemanager.asynchronous.asynctasks.compress;
 
-import android.content.Context;
-
 import com.amaze.filemanager.adapters.data.CompressedObjectParcelable;
 import com.amaze.filemanager.filesystem.compressed.CompressedHelper;
 import com.amaze.filemanager.utils.OnAsyncTaskFinished;
 
-import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
-
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
+import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 import static com.amaze.filemanager.filesystem.compressed.CompressedHelper.SEPARATOR;

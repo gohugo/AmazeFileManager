@@ -22,8 +22,6 @@
 
 package com.amaze.filemanager.asynchronous.asynctasks.compress;
 
-import android.content.Context;
-
 import com.amaze.filemanager.adapters.data.CompressedObjectParcelable;
 import com.amaze.filemanager.filesystem.compressed.CompressedHelper;
 import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.RarDecompressor;
@@ -34,7 +32,6 @@ import com.github.junrar.rarfile.FileHeader;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
 public class RarHelperTask extends CompressedHelperTask {

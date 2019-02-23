@@ -2,8 +2,8 @@ package com.amaze.filemanager.utils;
 
 import org.junit.Test;
 
-import static com.amaze.filemanager.utils.Utils.*;
-import static org.junit.Assert.*;
+import static com.amaze.filemanager.utils.Utils.getInstance;
+import static org.junit.Assert.assertEquals;
 
 public class UtilsTest {
     @Test

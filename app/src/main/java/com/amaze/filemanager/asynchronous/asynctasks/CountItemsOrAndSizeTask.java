@@ -8,9 +8,7 @@ import android.widget.TextView;
 
 import com.amaze.filemanager.R;
 import com.amaze.filemanager.filesystem.HybridFileParcelable;
-import com.amaze.filemanager.utils.OnFileFound;
 import com.amaze.filemanager.utils.files.FileUtils;
-import com.amaze.filemanager.utils.OnProgressUpdate;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

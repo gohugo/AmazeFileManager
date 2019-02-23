@@ -23,7 +23,6 @@ import android.support.annotation.DrawableRes;
 
 import com.amaze.filemanager.R;
 import com.amaze.filemanager.filesystem.compressed.CompressedHelper;
-import com.amaze.filemanager.utils.files.CryptUtil;
 
 import java.util.HashMap;
 

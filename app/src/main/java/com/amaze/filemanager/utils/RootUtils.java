@@ -4,14 +4,10 @@ package com.amaze.filemanager.utils;
  * Created by arpitkh996 on 25-01-2016.
  */
 
-import android.util.Log;
-
 import com.amaze.filemanager.exceptions.ShellNotRunningException;
 import com.amaze.filemanager.filesystem.RootHelper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class RootUtils {

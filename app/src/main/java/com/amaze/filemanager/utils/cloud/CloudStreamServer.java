@@ -3,10 +3,7 @@ package com.amaze.filemanager.utils.cloud;
 import android.net.Uri;
 import android.util.Log;
 
-import com.amaze.filemanager.utils.SmbStreamer.StreamServer;
-import com.amaze.filemanager.utils.SmbStreamer.StreamSource;
 import com.amaze.filemanager.utils.SmbStreamer.Streamer;
-import com.amaze.filemanager.utils.streams.RandomAccessStream;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;

@@ -24,17 +24,16 @@ package com.amaze.filemanager.filesystem.compressed;
 
 import android.content.Context;
 
+import com.amaze.filemanager.filesystem.compressed.extractcontents.Extractor;
 import com.amaze.filemanager.filesystem.compressed.extractcontents.helpers.GzipExtractor;
 import com.amaze.filemanager.filesystem.compressed.extractcontents.helpers.RarExtractor;
-import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.GzipDecompressor;
-import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.RarDecompressor;
-import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.ZipDecompressor;
-import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.TarDecompressor;
-import com.amaze.filemanager.filesystem.compressed.extractcontents.Extractor;
 import com.amaze.filemanager.filesystem.compressed.extractcontents.helpers.TarExtractor;
 import com.amaze.filemanager.filesystem.compressed.extractcontents.helpers.ZipExtractor;
 import com.amaze.filemanager.filesystem.compressed.showcontents.Decompressor;
-import com.amaze.filemanager.utils.Utils;
+import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.GzipDecompressor;
+import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.RarDecompressor;
+import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.TarDecompressor;
+import com.amaze.filemanager.filesystem.compressed.showcontents.helpers.ZipDecompressor;
 
 import java.io.File;
 

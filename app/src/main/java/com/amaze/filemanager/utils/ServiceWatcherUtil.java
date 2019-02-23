@@ -23,7 +23,8 @@ import com.amaze.filemanager.ui.notifications.NotificationConstants;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import static com.amaze.filemanager.utils.ServiceWatcherUtil.ServiceWatcherInteractionInterface.*;
+import static com.amaze.filemanager.utils.ServiceWatcherUtil.ServiceWatcherInteractionInterface.STATE_HALTED;
+import static com.amaze.filemanager.utils.ServiceWatcherUtil.ServiceWatcherInteractionInterface.STATE_RESUMED;
 import static com.amaze.filemanager.utils.ServiceWatcherUtil.ServiceWatcherInteractionInterface.STATE_UNSET;
 
 public class ServiceWatcherUtil {

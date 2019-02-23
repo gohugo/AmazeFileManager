@@ -2,7 +2,6 @@ package com.amaze.filemanager.utils.streams;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.stream.Stream;
 
 public abstract class RandomAccessStream extends InputStream {
 
