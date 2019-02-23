@@ -158,7 +158,7 @@ public class SmbConnectDialog extends DialogFragment {
         EditTextColorStateUtil.setTint(context, user, accentColor);
         EditTextColorStateUtil.setTint(context, pass, accentColor);
 
-        Utils.setTint(context, ch, accentColor);
+        Utils.getInstance().setTint(context, ch, accentColor);
         help.setOnClickListener(v -> {
             int accentColor1 = ((ThemedActivity) getActivity()).getAccent();
             GeneralDialogCreation.showSMBHelpDialog(context, accentColor1);

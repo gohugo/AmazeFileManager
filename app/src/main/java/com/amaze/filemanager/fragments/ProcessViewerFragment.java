@@ -222,7 +222,7 @@ public class ProcessViewerFragment extends Fragment {
 
             Spanned timerSpan = Html.fromHtml(getResources().getString(R.string.service_timer)
                     + ": <font color='" + accentColor + "'><i>"
-                    + Utils.formatTimer(++looseTimeInSeconds)
+                    + Utils.getInstance().formatTimer(++looseTimeInSeconds)
                     + "</font></i>");
 
             mProgressTimer.setText(timerSpan);

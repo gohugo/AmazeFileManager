@@ -65,7 +65,7 @@ public class EditableFileAbstraction {
 
                 String path = uri.getPath();
                 if(path == null) throw new NullPointerException("Uri '" + uri.toString() + "' is not hierarchical!");
-                path = Utils.sanitizeInput(path);
+                path = Utils.getInstance().sanitizeInput(path);
                 this.hybridFileParcelable = new HybridFileParcelable(path);
 
                 String tempN = hybridFileParcelable.getName(context);

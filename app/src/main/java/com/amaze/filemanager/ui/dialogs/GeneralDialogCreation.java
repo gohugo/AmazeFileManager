@@ -373,7 +373,7 @@ public class GeneralDialogCreation {
         final Context c = base.getApplicationContext();
         int accentColor = base.getAccent();
         long last = baseFile.getDate();
-        final String date = Utils.getDate(last),
+        final String date = Utils.getInstance().getDate(last),
                 items = c.getString(R.string.calculating),
                 name  = baseFile.getName(),
                 parent = baseFile.getReadablePath(baseFile.getParent(c));

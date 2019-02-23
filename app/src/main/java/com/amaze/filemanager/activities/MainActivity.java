@@ -510,7 +510,7 @@ public class MainActivity extends PermissionsActivity implements SmbConnectionLi
 
                     if (uri != null) {
 
-                        path = Utils.sanitizeInput(uri.getPath());
+                        path = Utils.getInstance().sanitizeInput(uri.getPath());
                     } else {
                         // no data field, open home for the tab in later processing
                         path = null;
@@ -518,7 +518,7 @@ public class MainActivity extends PermissionsActivity implements SmbConnectionLi
                 } else {
                     // we don't have folder resource mime type set, supposed to be zip/rar
                     openzip = true;
-                    zippath = Utils.sanitizeInput(uri.toString());
+                    zippath = Utils.getInstance().sanitizeInput(uri.toString());
                 }
 
             } else if (actionIntent.equals(Intent.ACTION_SEND) && type != null) {

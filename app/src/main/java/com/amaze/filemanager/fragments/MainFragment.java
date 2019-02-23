@@ -303,7 +303,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Bot
             public void onGlobalLayout() {
                 if ((columns == 0 || columns == -1)) {
                     int screen_width = listView.getWidth();
-                    int dptopx = Utils.dpToPx(getContext(), 115);
+                    int dptopx = Utils.getInstance().dpToPx(getContext(), 115);
                     columns = screen_width / dptopx;
                     if (columns == 0 || columns == -1) columns = 3;
                     if (!IS_LIST) mLayoutManagerGrid.setSpanCount(columns);
@@ -624,7 +624,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Bot
 
                         for (LayoutElementParcelable element : checkedItems) {
                             HybridFileParcelable baseFile = element.generateBaseFile();
-                            Uri resultUri = Utils.getUriForBaseFile(getActivity(), baseFile);
+                            Uri resultUri = Utils.getInstance().getUriForBaseFile(getActivity(), baseFile);
 
                             if (resultUri != null) {
                                 resulturis.add(resultUri);
@@ -983,7 +983,7 @@ public class MainFragment extends android.support.v4.app.Fragment implements Bot
 
             Intent intentresult = new Intent();
 
-            Uri resultUri = Utils.getUriForBaseFile(getActivity(), baseFile);
+            Uri resultUri = Utils.getInstance().getUriForBaseFile(getActivity(), baseFile);
             intentresult.setAction(Intent.ACTION_SEND);
             intentresult.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 

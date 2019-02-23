@@ -114,7 +114,7 @@ public abstract class AbstractProgressiveService extends Service implements Serv
 
                 String remainingTime;
                 if (speed != 0) {
-                    remainingTime = Utils.formatTimer(Math.round((totalSize-writtenSize)/speed));
+                    remainingTime = Utils.getInstance().formatTimer(Math.round((totalSize-writtenSize)/speed));
                 } else {
                     remainingTime = getString(R.string.unknown);
                 }

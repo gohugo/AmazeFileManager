@@ -64,13 +64,21 @@ public class Utils {
     private static final String INPUT_INTENT_BLACKLIST_AMP = "&&";
     private static final String INPUT_INTENT_BLACKLIST_DOTS = "\\.\\.\\.";
 
+    private static Utils instance = new Utils();
+
+    private Utils(){}
+
+    public static Utils getInstance(){
+        return instance;
+    }
+
     //methods for fastscroller
-    public static float clamp(float min, float max, float value) {
+    public float clamp(float min, float max, float value) {
         float minimum = Math.max(min, value);
         return Math.min(minimum, max);
     }
 
-    public static float getViewRawY(View view) {
+    public float getViewRawY(View view) {
         int[] location = new int[2];
         location[0] = 0;
         location[1] = (int) view.getY();
@@ -78,7 +86,7 @@ public class Utils {
         return location[1];
     }
 
-    public static void setTint(Context context, CheckBox box, int color) {
+    public void setTint(Context context, CheckBox box, int color) {
         if (Build.VERSION.SDK_INT >= 21) return;
         ColorStateList sl = new ColorStateList(new int[][]{
                 new int[]{-android.R.attr.state_checked},
@@ -94,7 +102,7 @@ public class Utils {
         }
     }
 
-    public static String getDate(long f) {
+    public String getDate(long f) {
         return DATE_WITH_MINUTES.format(f);
     }
 
@@ -119,7 +127,7 @@ public class Utils {
         }
     }
 
-    public static int dpToPx(Context c, int dp) {
+    public int dpToPx(Context c, int dp) {
         DisplayMetrics displayMetrics = c.getResources().getDisplayMetrics();
         return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
     }
@@ -146,7 +154,7 @@ public class Utils {
      *  Stolen from Apache's StringUtils
      *  (https://commons.apache.org/proper/commons-lang/javadocs/api-2.6/org/apache/commons/lang/StringUtils.html#difference(java.lang.String,%20java.lang.String))
      */
-    public static String differenceStrings(String str1, String str2) {
+    public String differenceStrings(String str1, String str2) {
         if (str1 == null) return str2;
         if (str2 == null) return str1;
 
@@ -157,7 +165,7 @@ public class Utils {
         return str2.substring(at);
     }
 
-    private static int indexOfDifferenceStrings(CharSequence cs1, CharSequence cs2) {
+    private int indexOfDifferenceStrings(CharSequence cs1, CharSequence cs2) {
         if (cs1 == cs2) return INDEX_NOT_FOUND;
         if (cs1 == null || cs2 == null) return 0;
 
@@ -185,18 +193,18 @@ public class Utils {
         }
     }
 
-    public static boolean isDeviceInLandScape(Activity activity){
+    public  boolean isDeviceInLandScape(Activity activity){
         return activity.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
     /**
      * Sanitizes input from external application to avoid any attempt of command injection
      */
-    public static String sanitizeInput(String input) {
+    public String sanitizeInput(String input) {
         // iterate through input and keep sanitizing until it's fully injection proof
         String sanitizedInput;
         String sanitizedInputTemp = input;
-        
+
         while (true) {
             sanitizedInput = sanitizeInputOnce(sanitizedInputTemp);
             if (sanitizedInput.equals(sanitizedInputTemp)) break;
@@ -206,7 +214,7 @@ public class Utils {
         return sanitizedInput;
     }
 
-    private static String sanitizeInputOnce(String input) {
+    private String sanitizeInputOnce(String input) {
         return input.replaceAll(INPUT_INTENT_BLACKLIST_PIPE, "").
                 replaceAll(INPUT_INTENT_BLACKLIST_AMP, "").
                 replaceAll(INPUT_INTENT_BLACKLIST_DOTS, "").
@@ -216,7 +224,7 @@ public class Utils {
     /**
      * Returns uri associated to specific basefile
      */
-    public static Uri getUriForBaseFile(Context context, HybridFileParcelable baseFile) {
+    public Uri getUriForBaseFile(Context context, HybridFileParcelable baseFile) {
         switch (baseFile.getMode()) {
             case FILE:
             case ROOT:
@@ -247,7 +255,7 @@ public class Utils {
      * nthToLastCharIndex(1, "a.tar.gz") = 1
      * nthToLastCharIndex(0, "a.tar.gz") = 5
      */
-    public static int nthToLastCharIndex(int elementNumber, String str, char element) {
+    public int nthToLastCharIndex(int elementNumber, String str, char element) {
         if(elementNumber <= 0) throw new IllegalArgumentException();
 
         int occurencies = 0;
@@ -265,7 +273,7 @@ public class Utils {
      * @param timerInSeconds duration in seconds
      * @return time in mm:ss format
      */
-    public static String formatTimer(long timerInSeconds) {
+    public String formatTimer(long timerInSeconds) {
         final long min = TimeUnit.SECONDS.toMinutes(timerInSeconds);
         final long sec = TimeUnit.SECONDS.toSeconds(timerInSeconds - TimeUnit.MINUTES.toSeconds(min));
         return String.format("%02d:%02d", min, sec);

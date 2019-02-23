@@ -358,7 +358,7 @@ public class BottomBar implements View.OnTouchListener{
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
                         fullPathAnim.setVisibility(View.VISIBLE);
-                        fullPathAnim.setText(Utils.differenceStrings(oldPath, newPath));
+                        fullPathAnim.setText(Utils.getInstance().differenceStrings(oldPath, newPath));
                         //fullPathText.setText(oldPath);
 
                         scroll.post(() -> pathScroll.fullScroll(View.FOCUS_RIGHT));
@@ -387,7 +387,7 @@ public class BottomBar implements View.OnTouchListener{
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
                         fullPathAnim.setVisibility(View.VISIBLE);
-                        fullPathAnim.setText(Utils.differenceStrings(newPath, oldPath));
+                        fullPathAnim.setText(Utils.getInstance().differenceStrings(newPath, oldPath));
                         fullPathText.setText(newPath);
 
                         scroll.post(() -> pathScroll.fullScroll(View.FOCUS_LEFT));

@@ -190,7 +190,7 @@ public class PrepareCopyTask extends AsyncTask<ArrayList<HybridFileParcelable>, 
 
         // checkBox
         final CheckBox checkBox = view.findViewById(R.id.checkBox);
-        Utils.setTint(context, checkBox, accentColor);
+        Utils.getInstance().setTint(context, checkBox, accentColor);
         dialogBuilder.theme(mainActivity.getAppTheme().getMaterialDialogTheme());
         dialogBuilder.title(context.getResources().getString(R.string.paste));
         dialogBuilder.positiveText(R.string.skip);

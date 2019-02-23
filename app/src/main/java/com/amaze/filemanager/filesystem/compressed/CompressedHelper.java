@@ -121,13 +121,13 @@ public abstract class CompressedHelper {
             return compressedName.substring(0, compressedName.lastIndexOf("."));
         } else if (isGzippedTar(compressedName)) {
             return compressedName.substring(0,
-                    Utils.nthToLastCharIndex(2, compressedName, '.'));
+                    Utils.getInstance().nthToLastCharIndex(2, compressedName, '.'));
         } else {
             return compressedName;
         }
     }
 
-    public static final boolean isEntryPathValid(String entryPath){
+    public static  boolean isEntryPathValid(String entryPath){
         return !entryPath.startsWith("..\\") && !entryPath.startsWith("../") && !entryPath.equals("..");
     }
 
