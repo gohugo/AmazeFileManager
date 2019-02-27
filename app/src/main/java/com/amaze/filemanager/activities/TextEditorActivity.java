@@ -365,8 +365,10 @@ public class TextEditorActivity extends ThemedActivity implements TextWatcher, V
             case R.id.details:
                 if (mFile.scheme == EditableFileAbstraction.SCHEME_FILE
                         && mFile.hybridFileParcelable.getFile().exists()) {
-                    GeneralDialogCreation.showPropertiesDialogWithoutPermissions(mFile.hybridFileParcelable,
-                            this, getAppTheme());
+                    GeneralDialogCreation.showPropertiesDialog(mFile.hybridFileParcelable,null,
+                            this,false, getAppTheme(), false, false);
+//                    GeneralDialogCreation.showPropertiesDialogWithoutPermissions(mFile.hybridFileParcelable,
+//                            this, getAppTheme());
                 } else {
                     Toast.makeText(this, R.string.no_obtainable_info, Toast.LENGTH_SHORT).show();
                 }

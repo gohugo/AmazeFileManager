@@ -647,9 +647,10 @@ public class MainFragment extends android.support.v4.app.Fragment implements Bot
                     return true;
                 case R.id.about:
                     LayoutElementParcelable x = checkedItems.get(0);
-                    GeneralDialogCreation.showPropertiesDialogWithPermissions((x).generateBaseFile(),
+
+                    GeneralDialogCreation.showPropertiesDialog((x).generateBaseFile(),
                             x.permissions, (ThemedActivity) getActivity(), getMainActivity().isRootExplorer(),
-                            utilsProvider.getAppTheme());
+                            utilsProvider.getAppTheme(), true, false);
                     mode.finish();
                     return true;
                 case R.id.delete:

@@ -49,6 +49,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.amaze.filemanager.ui.dialogs.SizeFormatter;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -354,19 +355,9 @@ public class GeneralDialogCreation {
         dialog.show();
     }
 
-    public static void showPropertiesDialogWithPermissions(HybridFileParcelable baseFile, final String permissions,
-                                                           ThemedActivity activity, boolean isRoot, AppTheme appTheme) {
-        showPropertiesDialog(baseFile, permissions, activity, isRoot, appTheme, true, false);
-    }
 
-    public static void showPropertiesDialogWithoutPermissions(final HybridFileParcelable f, ThemedActivity activity, AppTheme appTheme) {
-        showPropertiesDialog(f, null, activity, false, appTheme, false, false);
-    }
-    public static void showPropertiesDialogForStorage(final HybridFileParcelable f, ThemedActivity activity, AppTheme appTheme) {
-        showPropertiesDialog(f, null, activity, false, appTheme, false, true);
-    }
 
-    private static void showPropertiesDialog(final HybridFileParcelable baseFile, final String permissions,
+    public static void showPropertiesDialog(final HybridFileParcelable baseFile, final String permissions,
                                              ThemedActivity base, boolean isRoot, AppTheme appTheme,
                                              boolean showPermissions, boolean forStorage) {
         final ExecutorService executor = Executors.newFixedThreadPool(3);
@@ -538,30 +529,6 @@ public class GeneralDialogCreation {
         materialDialog.show();
         materialDialog.getActionButton(DialogAction.NEGATIVE).setEnabled(false);
 
-        /*
-        View bottomSheet = c.findViewById(R.id.design_bottom_sheet);
-        BottomSheetBehavior bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-        bottomSheetBehavior.setPeekHeight(BottomSheetBehavior.STATE_DRAGGING);
-        */
-    }
-
-    public static class SizeFormatter implements IValueFormatter {
-
-        private Context context;
-
-        public SizeFormatter(Context c) {
-            context = c;
-        }
-
-        @Override
-        public String getFormattedValue(float value, Entry entry, int dataSetIndex,
-                                        ViewPortHandler viewPortHandler) {
-            String prefix = entry.getData() != null && entry.getData() instanceof String?
-                    (String) entry.getData():"";
-
-            return prefix + Formatter.formatFileSize(context, (long) value);
-        }
     }
 
     public static void showCloudDialog(final MainActivity mainActivity, AppTheme appTheme, final OpenMode openMode) {
@@ -1140,9 +1107,6 @@ public class GeneralDialogCreation {
         a.show();
     }
 
-    public static MaterialDialog showOtgSafExplanationDialog(ThemedActivity themedActivity) {
-        return GeneralDialogCreation.showBasicDialog(themedActivity, R.string.saf_otg_explanation,
-                R.string.otg_access, R.string.ok, R.string.cancel);
-    }
+
 
 }

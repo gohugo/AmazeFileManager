@@ -580,7 +580,10 @@ public class Drawer implements NavigationView.OnNavigationItemSelectedListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
                         && meta.path.contains(OTGUtil.PREFIX_OTG)
                         && SingletonUsbOtg.getInstance().getUsbOtgRoot() == null) {
-                    MaterialDialog dialog = GeneralDialogCreation.showOtgSafExplanationDialog(mainActivity);
+
+                    MaterialDialog dialog =GeneralDialogCreation.showBasicDialog(mainActivity, R.string.saf_otg_explanation,
+                            R.string.otg_access, R.string.ok, R.string.cancel);
+
                     dialog.getActionButton(DialogAction.POSITIVE).setOnClickListener((v) -> {
                         Intent safIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
                         mainActivity.startActivityForResult(safIntent, MainActivity.REQUEST_CODE_SAF);
@@ -609,9 +612,11 @@ public class Drawer implements NavigationView.OnNavigationItemSelectedListener {
         switch (item.getGroupId()) {
             case STORAGES_GROUP:
                 if (!path.equals("/")) {
-                    GeneralDialogCreation.showPropertiesDialogForStorage(
-                            RootHelper.generateBaseFile(new File(path), true),
-                            mainActivity, mainActivity.getAppTheme());
+//                    GeneralDialogCreation.showPropertiesDialogForStorage(
+//                            RootHelper.generateBaseFile(new File(path), true),
+//                            mainActivity, mainActivity.getAppTheme());
+                    GeneralDialogCreation.showPropertiesDialog(RootHelper.generateBaseFile(new File(path), true),
+                            null, mainActivity, false, mainActivity.getAppTheme(), false, true);
                 }
                 break;
             // not to remove the first bookmark (storage) and permanent bookmarks

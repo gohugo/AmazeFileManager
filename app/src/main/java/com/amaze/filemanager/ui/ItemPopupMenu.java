@@ -66,18 +66,7 @@ public class ItemPopupMenu extends PopupMenu implements PopupMenu.OnMenuItemClic
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                GeneralDialogCreation.showPropertiesDialogWithPermissions((rowItem).generateBaseFile(),
-                        rowItem.permissions, (ThemedActivity) mainFragment.getActivity(),
-                        mainActivity.isRootExplorer(), utilitiesProvider.getAppTheme());
-                                /*
-                                PropertiesSheet propertiesSheet = new PropertiesSheet();
-                                Bundle arguments = new Bundle();
-                                arguments.putParcelable(PropertiesSheet.KEY_FILE, rowItem.generateBaseFile());
-                                arguments.putString(PropertiesSheet.KEY_PERMISSION, rowItem.getPermissions());
-                                arguments.putBoolean(PropertiesSheet.KEY_ROOT, ThemedActivity.rootMode);
-                                propertiesSheet.setArguments(arguments);
-                                propertiesSheet.show(main.getFragmentManager(), PropertiesSheet.TAG_FRAGMENT);
-                                */
+                GeneralDialogCreation.showPropertiesDialog((rowItem).generateBaseFile(), rowItem.permissions, (ThemedActivity) mainFragment.getActivity(), mainActivity.isRootExplorer(), utilitiesProvider.getAppTheme(), true, false);
                 return true;
             case R.id.share:
                 switch (rowItem.getMode()) {
