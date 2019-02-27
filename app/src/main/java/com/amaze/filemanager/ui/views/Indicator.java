@@ -34,6 +34,10 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.amaze.filemanager.R;
+import com.amaze.filemanager.ui.views.preference.Animator.LeftwardStartPredicate;
+import com.amaze.filemanager.ui.views.preference.Animator.PendingStartAnimator;
+import com.amaze.filemanager.ui.views.preference.Animator.RightwardStartPredicate;
+import com.amaze.filemanager.ui.views.preference.Animator.StartPredicate;
 import com.amaze.filemanager.utils.AnimUtils;
 
 import java.util.Arrays;
@@ -102,15 +106,6 @@ public class Indicator extends View implements ViewPager.OnPageChangeListener,
     private PendingRevealAnimator[] revealAnimations;
     private final Interpolator interpolator;
 
-    // working values for beziers
-    float endX1;
-    float endY1;
-    float endX2;
-    float endY2;
-    float controlX1;
-    float controlY1;
-    float controlX2;
-    float controlY2;
 
     public Indicator(Context context) {
         this(context, null, 0);
@@ -245,7 +240,7 @@ public class Indicator extends View implements ViewPager.OnPageChangeListener,
         } else {
             currentPage = 0;
         }
-        if (dotCenterX != null && dotCenterX.length!=0) {
+        if (dotCenterX != null && dotCenterX.length != 0) {
             selectedDotX = dotCenterX[currentPage];
         } else {
             selectedDotX = 0;
@@ -332,7 +327,7 @@ public class Indicator extends View implements ViewPager.OnPageChangeListener,
         // draw any settled, revealing or joining dots
         for (int page = 0; page < pageCount; page++) {
             int nextXIndex = page == pageCount - 1 ? page : page + 1;
-            combinedUnselectedPath.op(getUnselectedPath(page,
+            combinedUnselectedPath.op(new Dot().getUnselectedPath(page,
                     dotCenterX[page],
                     dotCenterX[nextXIndex],
                     page == pageCount - 1 ? INVALID_FRACTION : joiningFractions[page],
@@ -345,198 +340,215 @@ public class Indicator extends View implements ViewPager.OnPageChangeListener,
         canvas.drawPath(combinedUnselectedPath, unselectedPaint);
     }
 
-    /**
-     *
-     * Unselected dots can be in 6 states:
-     *
-     * #1 At rest
-     * #2 Joining neighbour, still separate
-     * #3 Joining neighbour, combined curved
-     * #4 Joining neighbour, combined straight
-     * #5 Join retreating
-     * #6 Dot re-showing / revealing
-     *
-     * It can also be in a combination of these states e.g. joining one neighbour while
-     * retreating from another.  We therefore create a Path so that we can examine each
-     * dot pair separately and later take the union for these cases.
-     *
-     * This function returns a path for the given dot **and any action to it's right** e.g. joining
-     * or retreating from it's neighbour
-     */
-    private Path getUnselectedPath(int page,
-                                   float centerX,
-                                   float nextCenterX,
-                                   float joiningFraction,
-                                   float dotRevealFraction) {
+    private class Dot {
+        // working values for beziers
+        float endX1;
+        float endY1;
+        float endX2;
+        float endY2;
+        float controlX1;
+        float controlY1;
+        float controlX2;
+        float controlY2;
 
-        unselectedDotPath.rewind();
+        /**
+         * Unselected dots can be in 6 states:
+         * <p>
+         * #1 At rest
+         * #2 Joining neighbour, still separate
+         * #3 Joining neighbour, combined curved
+         * #4 Joining neighbour, combined straight
+         * #5 Join retreating
+         * #6 Dot re-showing / revealing
+         * <p>
+         * It can also be in a combination of these states e.g. joining one neighbour while
+         * retreating from another.  We therefore create a Path so that we can examine each
+         * dot pair separately and later take the union for these cases.
+         * <p>
+         * This function returns a path for the given dot **and any action to it's right** e.g. joining
+         * or retreating from it's neighbour
+         */
+        public Path getUnselectedPath(int page,
+                                      float centerX,
+                                      float nextCenterX,
+                                      float joiningFraction,
+                                      float dotRevealFraction) {
 
-        if ((joiningFraction == 0f || joiningFraction == INVALID_FRACTION)
-                && dotRevealFraction == 0f
-                && !(page == currentPage && selectedDotInPosition)) {
+            unselectedDotPath.rewind();
 
-            // case #1 – At rest
-            unselectedDotPath.addCircle(dotCenterX[page], dotCenterY, dotRadius, Path.Direction.CW);
+            if ((joiningFraction == 0f || joiningFraction == INVALID_FRACTION)
+                    && dotRevealFraction == 0f
+                    && !(page == currentPage && selectedDotInPosition)) {
+
+                // case #1 – At rest
+                unselectedDotPath.addCircle(dotCenterX[page], dotCenterY, dotRadius, Path.Direction.CW);
+            }
+
+            if (joiningFraction > 0f && joiningFraction <= 0.5f
+                    && retreatingJoinX1 == INVALID_FRACTION) {
+
+                // case #2 – Joining neighbour, still separate
+
+                // start with the left dot
+                unselectedDotLeftPath.rewind();
+
+                // start at the bottom center
+                unselectedDotLeftPath.moveTo(centerX, dotBottomY);
+
+                // semi circle to the top center
+                rectF.set(centerX - dotRadius, dotTopY, centerX + dotRadius, dotBottomY);
+                unselectedDotLeftPath.arcTo(rectF, 90, 180, true);
+
+                // cubic to the right middle
+                endX1 = centerX + dotRadius + (joiningFraction * gap);
+                endY1 = dotCenterY;
+                controlX1 = centerX + halfDotRadius;
+                controlY1 = dotTopY;
+                controlX2 = endX1;
+                controlY2 = endY1 - halfDotRadius;
+                unselectedDotLeftPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX1, endY1);
+
+                // cubic back to the bottom center
+                endX2 = centerX;
+                endY2 = dotBottomY;
+                controlX1 = endX1;
+                controlY1 = endY1 + halfDotRadius;
+                controlX2 = centerX + halfDotRadius;
+                controlY2 = dotBottomY;
+                unselectedDotLeftPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX2, endY2);
+
+                unselectedDotPath.op(unselectedDotLeftPath, Path.Op.UNION);
+
+                // now do the next dot to the right
+                unselectedDotRightPath.rewind();
+
+                // start at the bottom center
+                unselectedDotRightPath.moveTo(nextCenterX, dotBottomY);
+
+                // semi circle to the top center
+                rectF.set(nextCenterX - dotRadius, dotTopY, nextCenterX + dotRadius, dotBottomY);
+                unselectedDotRightPath.arcTo(rectF, 90, -180, true);
+
+                // cubic to the left middle
+                endX1 = nextCenterX - dotRadius - (joiningFraction * gap);
+                endY1 = dotCenterY;
+                controlX1 = nextCenterX - halfDotRadius;
+                controlY1 = dotTopY;
+                controlX2 = endX1;
+                controlY2 = endY1 - halfDotRadius;
+                unselectedDotRightPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX1, endY1);
+
+                // cubic back to the bottom center
+                endX2 = nextCenterX;
+                endY2 = dotBottomY;
+                controlX1 = endX1;
+                controlY1 = endY1 + halfDotRadius;
+                controlX2 = endX2 - halfDotRadius;
+                controlY2 = dotBottomY;
+                unselectedDotRightPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX2, endY2);
+                unselectedDotPath.op(unselectedDotRightPath, Path.Op.UNION);
+            }
+
+            if (joiningFraction > 0.5f && joiningFraction < 1f
+                    && retreatingJoinX1 == INVALID_FRACTION) {
+
+                // case #3 – Joining neighbour, combined curved
+
+                // adjust the fraction so that it goes from 0.3 -> 1 to produce a more realistic 'join'
+                float adjustedFraction = (joiningFraction - 0.2f) * 1.25f;
+
+                // start in the bottom left
+                unselectedDotPath.moveTo(centerX, dotBottomY);
+
+                // semi-circle to the top left
+                rectF.set(centerX - dotRadius, dotTopY, centerX + dotRadius, dotBottomY);
+                unselectedDotPath.arcTo(rectF, 90, 180, true);
+
+                // bezier to the middle top of the join
+                endX1 = centerX + dotRadius + (gap / 2);
+                endY1 = dotCenterY - (adjustedFraction * dotRadius);
+                controlX1 = endX1 - (adjustedFraction * dotRadius);
+                controlY1 = dotTopY;
+                controlX2 = endX1 - ((1 - adjustedFraction) * dotRadius);
+                controlY2 = endY1;
+                unselectedDotPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX1, endY1);
+
+                // bezier to the top right of the join
+                endX2 = nextCenterX;
+                endY2 = dotTopY;
+                controlX1 = endX1 + ((1 - adjustedFraction) * dotRadius);
+                controlY1 = endY1;
+                controlX2 = endX1 + (adjustedFraction * dotRadius);
+                controlY2 = dotTopY;
+                unselectedDotPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX2, endY2);
+
+                // semi-circle to the bottom right
+                rectF.set(nextCenterX - dotRadius, dotTopY, nextCenterX + dotRadius, dotBottomY);
+                unselectedDotPath.arcTo(rectF, 270, 180, true);
+
+                // bezier to the middle bottom of the join
+                // endX1 stays the same
+                endY1 = dotCenterY + (adjustedFraction * dotRadius);
+                controlX1 = endX1 + (adjustedFraction * dotRadius);
+                controlY1 = dotBottomY;
+                controlX2 = endX1 + ((1 - adjustedFraction) * dotRadius);
+                controlY2 = endY1;
+                unselectedDotPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX1, endY1);
+
+                // bezier back to the start point in the bottom left
+                endX2 = centerX;
+                endY2 = dotBottomY;
+                controlX1 = endX1 - ((1 - adjustedFraction) * dotRadius);
+                controlY1 = endY1;
+                controlX2 = endX1 - (adjustedFraction * dotRadius);
+                controlY2 = endY2;
+                unselectedDotPath.cubicTo(controlX1, controlY1,
+                        controlX2, controlY2,
+                        endX2, endY2);
+            }
+
+
+            if (joiningFraction == 1 && retreatingJoinX1 == INVALID_FRACTION) {
+
+                // case #4 Joining neighbour, combined straight technically we could use case 3 for this
+                // situation as well but assume that this is an optimization rather than faffing around
+                // with beziers just to draw a rounded rect
+                rectF.set(centerX - dotRadius, dotTopY, nextCenterX + dotRadius, dotBottomY);
+                unselectedDotPath.addRoundRect(rectF, dotRadius, dotRadius, Path.Direction.CW);
+            }
+
+            // case #5 is handled by #getRetreatingJoinPath()
+            // this is done separately so that we can have a single retreating path spanning
+            // multiple dots and therefore animate it's movement smoothly
+
+            if (dotRevealFraction > MINIMAL_REVEAL) {
+
+                // case #6 – previously hidden dot revealing
+                unselectedDotPath.addCircle(centerX, dotCenterY, dotRevealFraction * dotRadius,
+                        Path.Direction.CW);
+            }
+
+            return unselectedDotPath;
+
+
         }
 
-        if (joiningFraction > 0f && joiningFraction <= 0.5f
-                && retreatingJoinX1 == INVALID_FRACTION) {
-
-            // case #2 – Joining neighbour, still separate
-
-            // start with the left dot
-            unselectedDotLeftPath.rewind();
-
-            // start at the bottom center
-            unselectedDotLeftPath.moveTo(centerX, dotBottomY);
-
-            // semi circle to the top center
-            rectF.set(centerX - dotRadius, dotTopY, centerX + dotRadius, dotBottomY);
-            unselectedDotLeftPath.arcTo(rectF, 90, 180, true);
-
-            // cubic to the right middle
-            endX1 = centerX + dotRadius + (joiningFraction * gap);
-            endY1 = dotCenterY;
-            controlX1 = centerX + halfDotRadius;
-            controlY1 = dotTopY;
-            controlX2 = endX1;
-            controlY2 = endY1 - halfDotRadius;
-            unselectedDotLeftPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX1, endY1);
-
-            // cubic back to the bottom center
-            endX2 = centerX;
-            endY2 = dotBottomY;
-            controlX1 = endX1;
-            controlY1 = endY1 + halfDotRadius;
-            controlX2 = centerX + halfDotRadius;
-            controlY2 = dotBottomY;
-            unselectedDotLeftPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX2, endY2);
-
-            unselectedDotPath.op(unselectedDotLeftPath, Path.Op.UNION);
-
-            // now do the next dot to the right
-            unselectedDotRightPath.rewind();
-
-            // start at the bottom center
-            unselectedDotRightPath.moveTo(nextCenterX, dotBottomY);
-
-            // semi circle to the top center
-            rectF.set(nextCenterX - dotRadius, dotTopY, nextCenterX + dotRadius, dotBottomY);
-            unselectedDotRightPath.arcTo(rectF, 90, -180, true);
-
-            // cubic to the left middle
-            endX1 = nextCenterX - dotRadius - (joiningFraction * gap);
-            endY1 = dotCenterY;
-            controlX1 = nextCenterX - halfDotRadius;
-            controlY1 = dotTopY;
-            controlX2 = endX1;
-            controlY2 = endY1 - halfDotRadius;
-            unselectedDotRightPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX1, endY1);
-
-            // cubic back to the bottom center
-            endX2 = nextCenterX;
-            endY2 = dotBottomY;
-            controlX1 = endX1;
-            controlY1 = endY1 + halfDotRadius;
-            controlX2 = endX2 - halfDotRadius;
-            controlY2 = dotBottomY;
-            unselectedDotRightPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX2, endY2);
-            unselectedDotPath.op(unselectedDotRightPath, Path.Op.UNION);
-        }
-
-        if (joiningFraction > 0.5f && joiningFraction < 1f
-                && retreatingJoinX1 == INVALID_FRACTION) {
-
-            // case #3 – Joining neighbour, combined curved
-
-            // adjust the fraction so that it goes from 0.3 -> 1 to produce a more realistic 'join'
-            float adjustedFraction = (joiningFraction - 0.2f) * 1.25f;
-
-            // start in the bottom left
-            unselectedDotPath.moveTo(centerX, dotBottomY);
-
-            // semi-circle to the top left
-            rectF.set(centerX - dotRadius, dotTopY, centerX + dotRadius, dotBottomY);
-            unselectedDotPath.arcTo(rectF, 90, 180, true);
-
-            // bezier to the middle top of the join
-            endX1 = centerX + dotRadius + (gap / 2);
-            endY1 = dotCenterY - (adjustedFraction * dotRadius);
-            controlX1 = endX1 - (adjustedFraction * dotRadius);
-            controlY1 = dotTopY;
-            controlX2 = endX1 - ((1 - adjustedFraction) * dotRadius);
-            controlY2 = endY1;
-            unselectedDotPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX1, endY1);
-
-            // bezier to the top right of the join
-            endX2 = nextCenterX;
-            endY2 = dotTopY;
-            controlX1 = endX1 + ((1 - adjustedFraction) * dotRadius);
-            controlY1 = endY1;
-            controlX2 = endX1 + (adjustedFraction * dotRadius);
-            controlY2 = dotTopY;
-            unselectedDotPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX2, endY2);
-
-            // semi-circle to the bottom right
-            rectF.set(nextCenterX - dotRadius, dotTopY, nextCenterX + dotRadius, dotBottomY);
-            unselectedDotPath.arcTo(rectF, 270, 180, true);
-
-            // bezier to the middle bottom of the join
-            // endX1 stays the same
-            endY1 = dotCenterY + (adjustedFraction * dotRadius);
-            controlX1 = endX1 + (adjustedFraction * dotRadius);
-            controlY1 = dotBottomY;
-            controlX2 = endX1 + ((1 - adjustedFraction) * dotRadius);
-            controlY2 = endY1;
-            unselectedDotPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX1, endY1);
-
-            // bezier back to the start point in the bottom left
-            endX2 = centerX;
-            endY2 = dotBottomY;
-            controlX1 = endX1 - ((1 - adjustedFraction) * dotRadius);
-            controlY1 = endY1;
-            controlX2 = endX1 - (adjustedFraction * dotRadius);
-            controlY2 = endY2;
-            unselectedDotPath.cubicTo(controlX1, controlY1,
-                    controlX2, controlY2,
-                    endX2, endY2);
-        }
-        if (joiningFraction == 1 && retreatingJoinX1 == INVALID_FRACTION) {
-
-            // case #4 Joining neighbour, combined straight technically we could use case 3 for this
-            // situation as well but assume that this is an optimization rather than faffing around
-            // with beziers just to draw a rounded rect
-            rectF.set(centerX - dotRadius, dotTopY, nextCenterX + dotRadius, dotBottomY);
-            unselectedDotPath.addRoundRect(rectF, dotRadius, dotRadius, Path.Direction.CW);
-        }
-
-        // case #5 is handled by #getRetreatingJoinPath()
-        // this is done separately so that we can have a single retreating path spanning
-        // multiple dots and therefore animate it's movement smoothly
-
-        if (dotRevealFraction > MINIMAL_REVEAL) {
-
-            // case #6 – previously hidden dot revealing
-            unselectedDotPath.addCircle(centerX, dotCenterY, dotRevealFraction * dotRadius,
-                    Path.Direction.CW);
-        }
-
-        return unselectedDotPath;
     }
+
 
     private Path getRetreatingJoinPath() {
         unselectedDotPath.rewind();
@@ -650,27 +662,28 @@ public class Indicator extends View implements ViewPager.OnPageChangeListener,
         // TODO: 20/08/18 ?
     }
 
-    /**
-     * A {@link ValueAnimator} that starts once a given predicate returns true.
-     */
-    abstract class PendingStartAnimator extends ValueAnimator {
+//    /**
+//     * A {@link ValueAnimator} that starts once a given predicate returns true.
+//     */
+//    abstract class PendingStartAnimator extends ValueAnimator {
+//
+//        protected boolean hasStarted;
+//        protected StartPredicate predicate;
+//
+//        public PendingStartAnimator(StartPredicate predicate) {
+//            super();
+//            this.predicate = predicate;
+//            hasStarted = false;
+//        }
+//
+//        public void startIfNecessary(float currentValue) {
+//            if (!hasStarted && predicate.shouldStart(currentValue)) {
+//                start();
+//                hasStarted = true;
+//            }
+//        }
+//    }
 
-        protected boolean hasStarted;
-        protected StartPredicate predicate;
-
-        public PendingStartAnimator(StartPredicate predicate) {
-            super();
-            this.predicate = predicate;
-            hasStarted = false;
-        }
-
-        public void startIfNecessary(float currentValue) {
-            if (!hasStarted && predicate.shouldStart(currentValue)) {
-                start();
-                hasStarted = true;
-            }
-        }
-    }
 
     /**
      * An Animator that shows and then shrinks a retreating join between the previous and newly
@@ -750,6 +763,7 @@ public class Indicator extends View implements ViewPager.OnPageChangeListener,
                     retreatingJoinX2 = initialX2;
                     postInvalidateOnAnimation();
                 }
+
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     retreatingJoinX1 = INVALID_FRACTION;
@@ -788,47 +802,5 @@ public class Indicator extends View implements ViewPager.OnPageChangeListener,
         }
     }
 
-    /**
-     * A predicate used to start an animation when a test passes
-     */
-    abstract class StartPredicate {
-
-        protected float thresholdValue;
-
-        public StartPredicate(float thresholdValue) {
-            this.thresholdValue = thresholdValue;
-        }
-
-        abstract boolean shouldStart(float currentValue);
-
-    }
-
-    /**
-     * A predicate used to start an animation when a given value is greater than a threshold
-     */
-    private class RightwardStartPredicate extends StartPredicate {
-
-        public RightwardStartPredicate(float thresholdValue) {
-            super(thresholdValue);
-        }
-
-        boolean shouldStart(float currentValue) {
-            return currentValue > thresholdValue;
-        }
-    }
-
-    /**
-     * A predicate used to start an animation then a given value is less than a threshold
-     */
-    private class LeftwardStartPredicate extends StartPredicate {
-
-        public LeftwardStartPredicate(float thresholdValue) {
-            super(thresholdValue);
-        }
-
-        boolean shouldStart(float currentValue) {
-            return currentValue < thresholdValue;
-        }
-    }
 
 }
