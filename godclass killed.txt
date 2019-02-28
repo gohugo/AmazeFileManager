@@ -4,3 +4,4 @@ Utils.java
 ThemedActivity
 GeneralDialogCreation.java
 Indicator.java
+MainActivityHelper.java
