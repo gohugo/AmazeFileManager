@@ -34,6 +34,7 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -76,8 +77,8 @@ public class MainActivityHelper {
 
     private static final String NEW_FILE_TXT_EXTENSION = ".txt";
 
-    private MainActivity mainActivity;
-    private DataUtils dataUtils = DataUtils.getInstance();
+    private final MainActivity mainActivity;
+    private final DataUtils dataUtils = DataUtils.getInstance();
     private int accentColor;
 
     /*
@@ -251,7 +252,7 @@ public class MainActivityHelper {
         return newPath;
     }
 
-    public void guideDialogForLEXA(String path) {
+    private void guideDialogForLEXA(String path) {
         final MaterialDialog.Builder x = new MaterialDialog.Builder(mainActivity);
         x.theme(mainActivity.getAppTheme().getMaterialDialogTheme());
         x.title(R.string.needsaccess);
@@ -350,7 +351,7 @@ public class MainActivityHelper {
         });
     }
 
-    public static final int DOESNT_EXIST = 0;
+    private static final int DOESNT_EXIST = 0;
     public static final int WRITABLE_OR_ON_SDCARD = 1;
     //For Android 5
     public static final int CAN_CREATE_FILES = 2;
@@ -525,9 +526,10 @@ public class MainActivityHelper {
     }
 
     public void deleteFiles(ArrayList<HybridFileParcelable> files) {
+        DeleteTask deleteTask = new DeleteTask(mainActivity);
         if (files == null || files.size() == 0) return;
         if (files.get(0).isSmb()) {
-            new DeleteTask(mainActivity).execute((files));
+            deleteTask.execute((files));
             return;
         }
         int mode = checkFolder(new File(files.get(0).getPath()).getParentFile(), mainActivity);
@@ -535,7 +537,7 @@ public class MainActivityHelper {
             mainActivity.oparrayList = (files);
             mainActivity.operation = DataUtils.DELETE;
         } else if (mode == 1 || mode == 0)
-            new DeleteTask(mainActivity).execute((files));
+            deleteTask.execute((files));
         else Toast.makeText(mainActivity, R.string.not_allowed, Toast.LENGTH_SHORT).show();
     }
 
@@ -572,21 +574,23 @@ public class MainActivityHelper {
         else return OTGUtil.PREFIX_OTG + path.substring(path.indexOf(":") + 1, path.length());
     }
 
+
     public String parseCloudPath(OpenMode serviceType, String path) {
+        final String SEPERATOR = ":";
         switch (serviceType) {
             case DROPBOX:
                 if (path.contains(CloudHandler.CLOUD_PREFIX_DROPBOX)) return path;
                 else
                     return CloudHandler.CLOUD_PREFIX_DROPBOX
-                            + path.substring(path.indexOf(":") + 1, path.length());
+                            + path.substring(path.indexOf(SEPERATOR) + 1, path.length());
             case BOX:
                 if (path.contains(CloudHandler.CLOUD_PREFIX_BOX)) return path;
                 else return CloudHandler.CLOUD_PREFIX_BOX
-                        + path.substring(path.indexOf(":") + 1, path.length());
+                        + path.substring(path.indexOf(SEPERATOR) + 1, path.length());
             case GDRIVE:
                 if (path.contains(CloudHandler.CLOUD_PREFIX_GOOGLE_DRIVE)) return path;
                 else return CloudHandler.CLOUD_PREFIX_GOOGLE_DRIVE
-                        + path.substring(path.indexOf(":") + 1, path.length());
+                        + path.substring(path.indexOf(SEPERATOR) + 1, path.length());
             case ONEDRIVE:
                 if (path.contains(CloudHandler.CLOUD_PREFIX_ONE_DRIVE)) return path;
                 else
@@ -654,15 +658,6 @@ public class MainActivityHelper {
 
         fragment.setArguments(args);
         fragmentManager.beginTransaction().add(fragment, MainActivity.TAG_ASYNC_HELPER).commit();
-    }
-
-    /**
-     * Check whether creation of new directory is inside the same directory with the same name or not
-     * Directory inside the same directory with similar filename shall not be allowed
-     * Doesn't work at an OTG path
-     */
-    public static boolean isNewDirectoryRecursive(HybridFile file) {
-        return file.getName().equals(file.getParentName());
     }
 
 }
